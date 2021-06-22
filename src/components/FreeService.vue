@@ -1,25 +1,15 @@
 <template>
-  <div class="flex justify-between">
-    <div>
-      <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">
-        {{ $moment(serviceDate).format("DD.MM.YYYY") }} {{ name }}
-      </p>
-    </div>
-    <div
-      v-for="freeServiceTime in freeServiceTimes"
-      :key="freeServiceTime.serviceTime"
-    >
+  <div
+    class="bg-white shadow rounded px-3 pt-3 pb-5 border-2"
+    :class="'border-400'"
+  >
+    <div class="flex justify-between">
       <p>
-        Time {{ freeServiceTime.serviceTime }}
+        Time to go
         <button>Book</button>
       </p>
-      <!-- <div
-        v-for="freeServiceTime in freeServiceTimes"
-        :key="freeServiceTime._id"
-        class="mt-3 cursor-move"
-      ></div> -->
-
-      <p>{{ freeServiceTimes.serviceTime }}</p>
+      <!-- <p>{{ freeServiceTimes.freeServiceTime }}</p> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -30,17 +20,23 @@ import { mapState } from "vuex";
 // import ServiceCard from "./ServiceCard.vue";
 export default {
   name: "FreeService",
-  components: {
-    // ServiceCard,
-  },
+
   data() {
     return {
       apiURL: process.env.VUE_APP_BACKEND_URL,
-      serviceName: "",
-      existingServiceNames: [],
+      // serviceName: "",
+      // existingServiceNames: [],
 
-      freeServiceTimes: [],
+      // freeServiceTimes: [],
     };
+  },
+  components: {
+    // ServiceCard,
+  },
+  props: {
+    freeServiceTimes: {
+      Type: String,
+    },
   },
   computed: mapState({
     name: (state) => state.name,
@@ -66,9 +62,9 @@ export default {
   //       method: "GET",
   //     });
 
-  //     this.freeServiceTimes = getAll.data.result;
-  //     console.log(this.freeServiceTimes);
-  //   },
+  //   this.freeServiceTimes = getAll.data.result;
+  //   console.log(this.freeServiceTimes);
+  // },
   // },
 };
 </script>

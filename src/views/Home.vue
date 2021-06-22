@@ -1,36 +1,35 @@
 <template>
   <div>
-    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <HelloWorld msg="Welcome to here" />
     <ul>
       <li>
-        <!-- <date-picker @date-picked="getAllDistinctServices($event)" /> -->
         <date-picker @date-added="getAllFreeServices($event)" />
       </li>
+    </ul>
+    <ul>
       <li>
-        <!-- <service-list @date-picked="getAllDistinctServices($event)" /> -->
-        <service-list />
+        <service-list @name-added="getAllFreeServices($event)" />
       </li>
       <ul>
         <li>
-          <free-service @date-added="getAllFreeServices($event)">
-            <div
-              v-for="freeServiceTime in freeServiceTimes"
-              :key="freeServiceTime.serviceTime"
-            >
-              <p>
-                Time {{ freeServiceTime.serviceTime }}
-                <button>Book</button>
-              </p>
-              <!-- <div
-        v-for="freeServiceTime in freeServiceTimes"
-        :key="freeServiceTime._id"
-        class="mt-3 cursor-move"
-      ></div> -->
+          <p
+            class="text-gray-700 font-semibold font-sans tracking-wide text-sm"
+          >
+            {{ $moment(serviceDate).format("DD.MM.YYYY") }} {{ name }}
+          </p>
+        </li>
+      </ul>
 
-              <p>{{ freeServiceTimes.serviceTime }}</p>
-            </div>
-          </free-service>
+      <ul>
+        <li>
+          <div
+            v-for="freeServiceTime in freeServiceTimes"
+            :key="freeServiceTime.id"
+          >
+            {{ freeServiceTime.serviceTime }}
+            <button>Book</button>
+            <p></p>
+          </div>
         </li>
       </ul>
     </ul>
@@ -43,7 +42,6 @@ import axios from "axios";
 import HelloWorld from "@/components/HelloWorld.vue";
 import DatePicker from "@/components/DatePicker.vue";
 import ServiceList from "@/components/ServiceList.vue";
-import FreeService from "@/components/FreeService.vue";
 import { mapState } from "vuex";
 import moment from "moment";
 export default {
@@ -52,7 +50,6 @@ export default {
     HelloWorld,
     DatePicker,
     ServiceList,
-    FreeService,
   },
 
   data() {
@@ -78,11 +75,10 @@ export default {
     async getAllDistinctServices() {
       console.log("Home getAllDistinctServices funktsioon algas");
       const getAll = await axios({
-        // url: `${this.apiURL}api/serviceName`,
         url: "http://localhost:3001/api/serviceName",
         method: "GET",
       });
-      this.existingServiceNames = getAll.data.allNames;
+      this.existingServiceNames = getAll.data;
     },
     async getAllFreeServices() {
       console.log("Home getAllFreeServices funktsioon algas");
@@ -91,14 +87,14 @@ export default {
       let storeDate = moment(this.$store.state.date).format("YYYY-MM-DD");
       console.log("Home storeDate" + storeDate);
       const getAll = await axios({
-        // url: `${this.apiURL}api/serviceName`,
         url: `http://localhost:3001/api/serviceOrder/${storeDate}/${storeName}/0`,
-        // url: "http://localhost:3001/api/serviceOrder/2021-07-07/Haircut/0",
+
         method: "GET",
       });
+      const FreeTimes = getAll.data.result;
+      this.freeServiceTimes = FreeTimes;
 
-      this.freeServiceTimes = getAll.data.result;
-      console.log("Home " + this.freeServiceTimes);
+      console.log("Home " + FreeTimes);
     },
     async addName() {
       this.$emit("name-added", {

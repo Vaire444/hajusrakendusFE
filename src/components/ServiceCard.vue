@@ -2,7 +2,7 @@
   <div class="bg-white shadow border-2">
     <div class="flex justify-between">
       <p>
-        {{ freeServiceTime.serviceTime }}
+        {{ freeServiceTimes }}
       </p>
       <p>
         <button>Book a service</button>
@@ -19,7 +19,7 @@ export default {
     };
   },
   props: {
-    serviceTime: {
+    serviceTimes: {
       default: () => ({}),
     },
   },

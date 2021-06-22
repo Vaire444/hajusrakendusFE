@@ -7,7 +7,8 @@
           v-model="serviceName"
           class="form-control"
           @change="
-            getAllDistinctServices(), $store.commit('setName', serviceName)
+            getAllDistinctServices(), $store.commit('setName', serviceName);
+            addName();
           "
         >
           <option disabled selected value="">Please select a service</option>
@@ -54,6 +55,10 @@ export default {
       });
       this.existingServiceNames = getAll.data.allNames;
       // console.log("ServiceList" + this.existingServiceNames);
+    },
+    async addName() {
+      console.log("DatePicker addDate funktsioon algas");
+      this.$emit("name-added");
     },
   },
 };
