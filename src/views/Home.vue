@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HelloWorld msg="Welcome to here" />
+    <HelloWorld msg="Welcome to here!" />
     <ul>
       <li>
         <date-picker @date-added="getAllFreeServices($event)" />
