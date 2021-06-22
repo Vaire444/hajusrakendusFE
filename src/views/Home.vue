@@ -73,7 +73,6 @@ export default {
 
   methods: {
     async getAllDistinctServices() {
-      console.log("Home getAllDistinctServices funktsioon algas");
       const getAll = await axios({
         url: "http://localhost:3001/api/serviceName",
         method: "GET",
@@ -81,11 +80,8 @@ export default {
       this.existingServiceNames = getAll.data;
     },
     async getAllFreeServices() {
-      console.log("Home getAllFreeServices funktsioon algas");
       let storeName = this.$store.state.name;
-      console.log("Home " + storeName);
       let storeDate = moment(this.$store.state.date).format("YYYY-MM-DD");
-      console.log("Home storeDate" + storeDate);
       const getAll = await axios({
         url: `http://localhost:3001/api/serviceOrder/${storeDate}/${storeName}/0`,
 
@@ -93,13 +89,6 @@ export default {
       });
       const FreeTimes = getAll.data.result;
       this.freeServiceTimes = FreeTimes;
-
-      console.log("Home " + FreeTimes);
-    },
-    async addName() {
-      this.$emit("name-added", {
-        userName: this.userName,
-      });
     },
   },
 };

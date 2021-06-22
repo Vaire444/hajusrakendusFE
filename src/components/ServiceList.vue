@@ -57,7 +57,6 @@ export default {
       // console.log("ServiceList" + this.existingServiceNames);
     },
     async addName() {
-      console.log("DatePicker addDate funktsioon algas");
       this.$emit("name-added");
     },
   },
